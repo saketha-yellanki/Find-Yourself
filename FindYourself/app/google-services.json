@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "677989824512",
+    "firebase_url": "https://findyourself-a8545.firebaseio.com",
+    "project_id": "findyourself-a8545",
+    "storage_bucket": "findyourself-a8545.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:677989824512:android:79b3343dd7fc74eaebc0e5",
+        "android_client_info": {
+          "package_name": "com.findyourself"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "677989824512-n8fmq1mmr0dp8k5g1js0durndm6923qf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.findyourself",
+            "certificate_hash": "2b4e72990c4c2c22416e9c8481190fb2f45df353"
+          }
+        },
+        {
+          "client_id": "677989824512-a93mruem35lsa838dlnurgr5d7cmkgad.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeRIqP2AZZpkpgX_VXZPtoj-C22wVQxyc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "677989824512-a93mruem35lsa838dlnurgr5d7cmkgad.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
