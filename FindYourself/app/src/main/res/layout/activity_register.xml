@@ -29,7 +29,7 @@
                 android:layout_marginLeft="14dp"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/arbutus_slab"
-                android:text="@string/welcome"
+                android:text="Welcome"
                 android:textSize="40sp"
                 android:textStyle="bold" />
 
@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="14dp"
-                android:text="@string/reg_tag"
+                android:text="reg_tag"
                 android:textColor="@android:color/holo_blue_dark"
                 android:textSize="18sp"
                 android:textStyle="italic" />
