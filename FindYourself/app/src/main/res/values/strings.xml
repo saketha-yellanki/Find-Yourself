@@ -4,4 +4,6 @@
     <string name="find_yourself">Find Yourself</string>
     <string name="anonymous_chat_rooms">Anonymous Chat Rooms</string>
     <string name="todo">TODO</string>
+    <string name="welcome">WELCOME</string>
+    <string name="reg_tag">SignUp to find more of YourSelf</string>
 </resources>
