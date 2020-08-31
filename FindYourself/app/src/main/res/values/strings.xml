@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">FindYourself</string>
+    <string name="login_screen">Login Screen</string>
+    <string name="find_yourself">Find Yourself</string>
+    <string name="anonymous_chat_rooms">Anonymous Chat Rooms</string>
+    <string name="todo">TODO</string>
 </resources>
