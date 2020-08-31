@@ -12,7 +12,7 @@
         android:id="@+id/logo_image"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:contentDescription="TODO"
+        android:layout_gravity="center"
         android:src="@drawable/fy_logo"
         android:transitionName="logo_image" />
 
@@ -20,7 +20,7 @@
         android:id="@+id/logo_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/arbutus_slab"
+        android:fontFamily="@font/bungee_inline"
         android:text="@string/welcome_to_anonymous_chat_rooms"
         android:textColor="#000"
         android:textSize="40sp"
@@ -31,6 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sign_in_to_continue"
+        android:fontFamily="sans-serif-condensed"
         android:textSize="18sp" />
 
     <LinearLayout
@@ -40,6 +41,20 @@
         android:layout_marginBottom="20dp"
         android:orientation="vertical">
 
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Username"
+            android:textSize="24sp"></EditText>
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword|numberPassword"
+            android:textSize="24sp"></EditText>
 
         <Button
             android:layout_width="200dp"
