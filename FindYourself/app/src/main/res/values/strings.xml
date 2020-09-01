@@ -8,4 +8,13 @@
     <string name="sign_in_to_continue">Sign In to continue</string>
     <string name="welcome">WELCOME</string>
     <string name="reg_tag">Register to Find More of YourSelf</string>
+    <string name="logo">Find Yourself Logo</string>
+    <string name="username">Username</string>
+    <string name="fullname">Full Name</string>
+    <string name="pass">Password</string>
+    <string name="conf_pass">Confirm Password</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="no_pref">Prefer Not To Say</string>
+    <string name="register">Register</string>
 </resources>
