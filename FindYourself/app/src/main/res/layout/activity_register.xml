@@ -53,7 +53,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="14dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="14dp"
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -64,6 +66,7 @@
                 android:hint="@string/username">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/reg_un_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text" />
@@ -78,6 +81,7 @@
                 android:hint="@string/fullname">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/reg_fn_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text" />
@@ -93,6 +97,7 @@
                 app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/reg_pass_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword" />
@@ -108,6 +113,7 @@
                 app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/reg_conf_pass_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword" />
@@ -122,6 +128,7 @@
                 android:hint="@string/dob_et">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/date_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="date" />
