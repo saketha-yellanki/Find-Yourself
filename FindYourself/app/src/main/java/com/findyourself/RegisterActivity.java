@@ -8,6 +8,7 @@ import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -18,6 +19,7 @@ public class RegisterActivity extends AppCompatActivity {
     TextInputLayout username, fullname, password, conf_password, dob;
     TextInputEditText un_et, fn_et, pass_et, conf_pass_et, dob_et;
     RadioGroup gender_grp;
+    MaterialButton register_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,40 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         findViews();
+        implementDatePicker();
+
+        register_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                errorImplementation();
+
+            }
+        });
+
+
+    }
+
+    private void errorImplementation() {
+        if (un_et.length() == 0) {
+            un_et.setError("Username cannot be empty");
+        }
+        if (fn_et.length() == 0) {
+            fn_et.setError("Full Name cannot be empty");
+        }
+        if (pass_et.length() == 0) {
+            pass_et.setError("Password cannot be empty");
+        }
+        if (conf_pass_et.length() == 0) {
+            conf_pass_et.setError("Confirm Password cannot be empty");
+        }
+        if (dob_et.length() == 0) {
+            dob_et.setError("Date of Birth cannot be empty");
+        }
+
+    }
+
+    private void implementDatePicker() {
+
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
@@ -46,7 +82,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     private void findViews() {
@@ -61,6 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
         pass_et = findViewById(R.id.reg_pass_et);
         conf_pass_et = findViewById(R.id.reg_conf_pass_et);
         dob_et = findViewById(R.id.date_et);
+        register_btn = findViewById(R.id.reg_btn);
 
 
     }
