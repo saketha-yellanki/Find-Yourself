@@ -17,4 +17,5 @@
     <string name="female">Female</string>
     <string name="no_pref">Prefer Not To Say</string>
     <string name="register">Register</string>
+    <string name="dob_et">Date of Birth</string>
 </resources>
