@@ -6,4 +6,6 @@
     <string name="todo">TODO</string>
     <string name="welcome_to_anonymous_chat_rooms">Welcome to Anonymous Chat Rooms</string>
     <string name="sign_in_to_continue">Sign In to continue</string>
+    <string name="welcome">WELCOME</string>
+    <string name="reg_tag">Register to Find More of YourSelf</string>
 </resources>
