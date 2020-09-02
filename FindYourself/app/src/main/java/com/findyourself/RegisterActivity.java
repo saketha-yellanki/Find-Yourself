@@ -1,10 +1,12 @@
 package com.findyourself;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -19,8 +21,12 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -32,16 +38,36 @@ public class RegisterActivity extends AppCompatActivity {
     int dob_year, dob_month, dob_day;
 
     FirebaseAuth mAuth;
+    FirebaseDatabase db;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        mAuth = FirebaseAuth.getInstance();
+
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        }
 
         findViews();
         implementDatePicker();
 
-        mAuth = FirebaseAuth.getInstance();
+
+        db = FirebaseDatabase.getInstance();
 
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,11 +81,13 @@ public class RegisterActivity extends AppCompatActivity {
                     String pass = Objects.requireNonNull(pass_et.getText()).toString();
                     String conf_pass = Objects.requireNonNull(conf_pass_et.getText()).toString();
                     String birthday = Objects.requireNonNull(dob_et.getText()).toString();
+                    RadioButton gender_selected = findViewById(gender_grp.getCheckedRadioButtonId());
+                    String gender = gender_selected.getText().toString();
 
                     if (passwordValid(pass, conf_pass)) {
                         if (getAge(dob_year, dob_month, dob_day) >= 15) {
                             //register user
-                            createUser(em, pass);
+                            createUser(em, pass, un, fn, birthday, gender);
 
                         } else {
                             Toast.makeText(RegisterActivity.this, "You are under age to use this application", Toast.LENGTH_SHORT).show();
@@ -75,26 +103,46 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void createUser(String email, String password) {
+    private void createUser(String email, String password, final String username, final String fullname, final String dob, final String gender) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
                             Log.d("TAG", "createUserWithEmail:success");
-                            Toast.makeText(RegisterActivity.this, "User created", Toast.LENGTH_SHORT).show();
-
+                            Toast.makeText(RegisterActivity.this, "Hello " + username, Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
-                            //updateUI(user);
+                            if (user != null) {
+                                storeDetails(user, username, fullname, dob, gender);
+                            }
                         } else {
-                            // If sign in fails, display a message to the user.
                             Log.w("TAG", "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(RegisterActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "Authentication failed : " + task.getException(), Toast.LENGTH_SHORT).show();
 
                         }
                     }
                 });
+    }
+
+    private void storeDetails(FirebaseUser user, String username, String fullname, String dob, String gender) {
+        String uid = user.getUid();
+        DatabaseReference ref = db.getReference("users");
+        Map newUser = new HashMap();
+        newUser.put(uid, new ThisUser(username, fullname, gender, dob));
+        ref.child(uid).setValue(newUser.get(uid)).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.i("Registration Status", "Data Saved Successfully");
+                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                    finish();
+                } else {
+                    Log.i("Registration Status", "Failed Saving Data" + task.getException());
+                }
+
+            }
+        });
+
     }
 
     private int getAge(int year, int month, int day) {

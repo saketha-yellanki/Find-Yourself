@@ -1,60 +1,73 @@
 package com.findyourself;
 
-import android.app.ActivityOptions;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Pair;
-import android.view.View;
-import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
+import android.util.Log;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
-    private static int SPLASH_SCREEN = 5000;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-    Animation topAnim, bottomAnim;
-    ImageView image;
-    TextView logo, slogan;
+import java.util.Objects;
+
+public class MainActivity extends AppCompatActivity {
+
+    FirebaseAuth fAuth;
+    FirebaseUser current_user;
+    FirebaseDatabase db;
+    ThisUser user;
+
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
-        //Animations
-        topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
-        bottomAnim = AnimationUtils.loadAnimation(this, R.anim.bottom_animation);
+        findViews();
+        fAuth = FirebaseAuth.getInstance();
+        current_user = fAuth.getCurrentUser();
+        db = FirebaseDatabase.getInstance();
+        user = ThisUser.getInstance();
+        loadData();
 
-        //Hooks
-        image = findViewById(R.id.imageView);
-        logo = findViewById(R.id.textView);
-        slogan = findViewById(R.id.textView2);
-
-        image.setAnimation(topAnim);
-        logo.setAnimation(bottomAnim);
-        slogan.setAnimation(bottomAnim);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                Pair[] pairs = new Pair[2];
-                pairs[0] = new Pair<View, String>(image, "logo_image");
-                pairs[1] = new Pair<View, String>(logo, "logo_text");
-
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, pairs);
-                startActivity(intent, options.toBundle());
-
-            }
-        }, SPLASH_SCREEN);
+        //Log.i("Firebase User Details",current_user.getUid());
+        //Log.i("Firebase User Details",Objects.requireNonNull(db.getReference("users").child(current_user.getUid()).toString()));
 
 
     }
 
+    private void findViews() {
+        textView = findViewById(R.id.text);
+    }
+
+    private void loadData() {
+        DatabaseReference ref = db.getReference("users");
+        ref.child(current_user.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                Log.i("just checking", snapshot.child("username").getValue().toString());
+//                Log.i("just checking 2", snapshot.getValue().toString());
+                user.setUsername(Objects.requireNonNull(snapshot.child("username").getValue()).toString());
+                user.setFullname(Objects.requireNonNull(snapshot.child("fullname").getValue()).toString());
+                user.setGender(Objects.requireNonNull(snapshot.child("gender").getValue()).toString());
+                user.setBirthday(Objects.requireNonNull(snapshot.child("birthday").getValue()).toString());
+
+                textView.setText(user.getUsername());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.i("DatabaseError", error.getMessage());
+
+            }
+        });
+    }
 }
