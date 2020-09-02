@@ -18,4 +18,6 @@
     <string name="no_pref">Prefer Not To Say</string>
     <string name="register">Register</string>
     <string name="dob_et">Date of Birth</string>
+    <string name="email">Email</string>
+    <string name="email_purpose">*Email ID will only be used for authentication and password recovery purposes. Your identity will not be disclosed with this information.</string>
 </resources>
