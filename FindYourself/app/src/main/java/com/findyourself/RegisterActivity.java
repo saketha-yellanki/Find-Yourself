@@ -44,7 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
                     String conf_password = Objects.requireNonNull(conf_pass_et.getText()).toString();
                     String birthday = Objects.requireNonNull(dob_et.getText()).toString();
 
-                    if (passwordValid(password, conf_password) && getAge(dob_year, dob_month, dob_day) >= 15) {
+                    if (passwordValid(password, conf_password)) {
                         if (getAge(dob_year, dob_month, dob_day) >= 15) {
                             //register user
 
