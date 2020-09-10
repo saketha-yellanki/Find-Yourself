@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
     RadioGroup gender_grp;
     MaterialButton register_btn;
     int dob_year, dob_month, dob_day;
+    MaterialTextView already_user_txt;
 
     FirebaseAuth mAuth;
     FirebaseDatabase db;
@@ -97,6 +99,13 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 }
 
+            }
+        });
+
+        already_user_txt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             }
         });
 
@@ -235,6 +244,7 @@ public class RegisterActivity extends AppCompatActivity {
         register_btn = findViewById(R.id.reg_btn);
         email = findViewById(R.id.reg_email);
         email_et = findViewById(R.id.reg_email_et);
+        already_user_txt = findViewById(R.id.already_user);
 
 
     }

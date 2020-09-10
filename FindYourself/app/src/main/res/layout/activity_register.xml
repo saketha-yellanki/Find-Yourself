@@ -197,6 +197,13 @@
                 android:text="@string/register"
                 android:textColor="@android:color/white" />
 
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/already_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:text="@string/already_user" />
+
 
         </LinearLayout>
     </ScrollView>

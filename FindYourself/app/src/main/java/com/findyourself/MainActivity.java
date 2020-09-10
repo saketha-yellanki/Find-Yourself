@@ -1,12 +1,15 @@
 package com.findyourself;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     ThisUser user;
 
     TextView textView;
+    MaterialButton logout_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +44,19 @@ public class MainActivity extends AppCompatActivity {
 
         //Log.i("Firebase User Details",current_user.getUid());
         //Log.i("Firebase User Details",Objects.requireNonNull(db.getReference("users").child(current_user.getUid()).toString()));
-
+        logout_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                finish();
+            }
+        });
 
     }
 
     private void findViews() {
+        logout_btn = findViewById(R.id.logout);
         textView = findViewById(R.id.text);
     }
 
