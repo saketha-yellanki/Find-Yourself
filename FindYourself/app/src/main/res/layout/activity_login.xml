@@ -20,14 +20,14 @@
 
     <TextView
         android:id="@+id/logo_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/candal"
-        android:gravity="center"
+        android:layout_marginBottom="14dp"
         android:text="@string/anonymous_chat_rooms"
         android:textAlignment="center"
-        android:textColor="#000"
-        android:textSize="30sp"
+        android:gravity="center_horizontal"
+        android:textColor="#222"
+        android:textSize="18sp"
         android:transitionName="logo_text" />
 
     <TextView
