@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -32,40 +33,61 @@
                 android:layout_toRightOf="@id/profile_image"
                 android:includeFontPadding="false"
                 android:text="@string/fullname"
-                android:textColor="#ffffff"
-                android:textSize="25sp" />
+                android:textSize="30sp" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/full_name"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@id/profile_image"
-                android:includeFontPadding="false"
-                android:text="@string/username"
-                android:textColor="#ffffff"
-                android:textSize="14sp" />
+
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="16dp">
+            android:layout_margin="20dp"
+            android:orientation="vertical">
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/username" />
+                android:text="@string/username"
+                android:layout_marginBottom="30dp"
+                android:textSize="25sp" />
 
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:text="@string/dob_et"
+                android:textSize="25sp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:text="@string/gender_et"
+
+                android:textSize="25sp" />
         </LinearLayout>
 
+
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/logout_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:background="@color/colorPrimary"
+            android:text="@string/logout"
+            android:textColor="@android:color/white"
+            android:textSize="18sp">
+
+        </com.google.android.material.button.MaterialButton>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_gravity="center_horizontal"
             android:text="@string/delete_acc"
+            android:background="@color/colorPrimaryLight"
+            android:textSize="18sp"
             android:textColor="@android:color/white">
 
         </com.google.android.material.button.MaterialButton>
@@ -75,3 +97,4 @@
 
 
 </ScrollView>
+

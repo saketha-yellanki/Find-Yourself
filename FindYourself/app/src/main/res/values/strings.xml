@@ -28,4 +28,8 @@
     <string name="profile">PROFILE</string>
     <string name="delete_acc">DELETE ACCOUNT</string>
     <string name="update_acc">Update Profile</string>
+    <string name="all_chats">ALL CHAT ROOMS</string>
+    <string name="gender_et">Gender</string>
+    <string name="your_chats">Your Chat Rooms</string>
+    <string name="logout">Logout</string>
 </resources>
