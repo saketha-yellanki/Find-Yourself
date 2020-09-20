@@ -1,8 +1,10 @@
-package com.findyourself;
+package com.findyourself.activities;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.findyourself.R;
 
 public class ChatRoomActivity extends AppCompatActivity {
 

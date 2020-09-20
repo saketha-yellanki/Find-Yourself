@@ -1,4 +1,4 @@
-package com.findyourself;
+package com.findyourself.activities;
 
 public class ThisUser {
     private static ThisUser instance;

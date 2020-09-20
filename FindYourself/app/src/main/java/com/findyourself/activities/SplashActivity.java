@@ -1,4 +1,4 @@
-package com.findyourself;
+package com.findyourself.activities;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.findyourself.R;
 
 public class SplashActivity extends AppCompatActivity {
     private static int SPLASH_SCREEN = 5000;

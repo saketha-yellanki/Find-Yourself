@@ -21,4 +21,6 @@
     <string name="email">Email</string>
     <string name="email_purpose">*Email ID will only be used for authentication and password recovery purposes. Your identity will not be disclosed with this information.</string>
     <string name="already_user">"Already a User? Sign In "</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="forgot_pass">Forgot Password?</string>
 </resources>

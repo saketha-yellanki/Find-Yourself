@@ -1,9 +1,11 @@
-package com.findyourself;
+package com.findyourself.activities;
 
 import android.os.Bundle;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.findyourself.R;
 
 public class LoginActivity extends AppCompatActivity {
 
