@@ -28,4 +28,6 @@
     <string name="profile">PROFILE</string>
     <string name="delete_acc">DELETE ACCOUNT</string>
     <string name="update_acc">Update Profile</string>
+    <string name="gender">string</string>
+    <string name="gender_et">Gender</string>
 </resources>
