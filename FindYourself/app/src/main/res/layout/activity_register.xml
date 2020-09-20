@@ -199,13 +199,13 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/already_user"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
+                android:layout_gravity="right"
+                android:layout_marginTop="8dp"
                 android:text="@string/already_user" />
-
-
         </LinearLayout>
     </ScrollView>
 
