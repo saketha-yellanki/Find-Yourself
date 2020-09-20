@@ -1,16 +1,12 @@
 package com.findyourself.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.findyourself.R;
-import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,8 +24,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase db;
     ThisUser user;
 
-    TextView textView;
-    MaterialButton logout_btn;
+
 
 
     @Override
@@ -49,24 +44,20 @@ public class MainActivity extends AppCompatActivity {
         //Log.i("Firebase User Details",Objects.requireNonNull(db.getReference("users").child(current_user.getUid()).toString()));
 
 
-        logout_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                finish();
-            }
-        });
+//        logout_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FirebaseAuth.getInstance().signOut();
+//                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+//                finish();
+//            }
+//        });
 
     }
 
     private void findViews() {
-        logout_btn = findViewById(R.id.logout);
-        textView = findViewById(R.id.text);
 
     }
-
-
 
     private void loadData() {
         DatabaseReference ref = db.getReference("users");
@@ -80,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 user.setGender(Objects.requireNonNull(snapshot.child("gender").getValue()).toString());
                 user.setBirthday(Objects.requireNonNull(snapshot.child("birthday").getValue()).toString());
 
-                textView.setText(user.getUsername());
+                //textView.setText(user.getUsername());
             }
 
             @Override

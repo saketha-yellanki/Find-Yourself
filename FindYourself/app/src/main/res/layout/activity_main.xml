@@ -1,23 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".activities.MainActivity">
 
-    <TextView
-        android:id="@+id/text"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:layout_margin="50dp" />
+        android:layout_gravity="bottom">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/logout"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabBackground="@color/colorPrimary"
+            app:tabIconTint="@color/colorPrimaryLight"
+            app:tabIndicatorColor="@color/colorPrimaryLight"
+            app:tabIndicatorGravity="top"
+            app:tabTextColor="@android:color/white">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/chat"
+                android:text="chat" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/search"
+                android:text="explore" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/profile"
+                android:text="profile" />
+
+
+        </com.google.android.material.tabs.TabLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Logout" />
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
