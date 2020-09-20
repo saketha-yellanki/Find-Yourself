@@ -23,4 +23,7 @@
     <string name="already_user">"Already a User? Sign In "</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="forgot_pass">Forgot Password?</string>
+    <string name="chat">CHAT</string>
+    <string name="explore">EXPLORE</string>
+    <string name="profile">PROFILE</string>
 </resources>

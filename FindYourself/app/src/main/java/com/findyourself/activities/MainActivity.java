@@ -2,11 +2,17 @@ package com.findyourself.activities;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.findyourself.R;
+import com.findyourself.fragments.AllChatsFragment;
+import com.findyourself.fragments.ProfileFragment;
+import com.findyourself.fragments.YourChatsFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -24,8 +30,31 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase db;
     ThisUser user;
 
+    AllChatsFragment allChatsFragment;
+    ProfileFragment profileFragment;
+    YourChatsFragment yourChatsFragment;
 
+    BottomNavigationView bottomNav;
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Fragment selectedFragent = null;
+            switch (item.getItemId()) {
+                case R.id.page_1:
+                    selectedFragent = new YourChatsFragment();
+                    break;
+                case R.id.page_2:
+                    selectedFragent = new AllChatsFragment();
+                    break;
+                case R.id.page_3:
+                    selectedFragent = new ProfileFragment();
+                    break;
+            }
 
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragent).commit();
+            return true;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
         user = ThisUser.getInstance();
 
         loadData();
+
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new YourChatsFragment()).commit();
+
 
         //Log.i("Firebase User Details",current_user.getUid());
         //Log.i("Firebase User Details",Objects.requireNonNull(db.getReference("users").child(current_user.getUid()).toString()));
@@ -56,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void findViews() {
-
+        bottomNav = findViewById(R.id.bottom_navigation);
     }
 
     private void loadData() {
@@ -81,4 +114,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }
