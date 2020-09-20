@@ -26,4 +26,6 @@
     <string name="chat">CHAT</string>
     <string name="explore">EXPLORE</string>
     <string name="profile">PROFILE</string>
+    <string name="delete_acc">DELETE ACCOUNT</string>
+    <string name="update_acc">Update Profile</string>
 </resources>
