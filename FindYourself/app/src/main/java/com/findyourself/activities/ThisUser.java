@@ -1,7 +1,7 @@
 package com.findyourself.activities;
 
 public class ThisUser {
-    private static ThisUser instance;
+    public static ThisUser instance;
     public String username;
     public String fullname;
     public String gender;

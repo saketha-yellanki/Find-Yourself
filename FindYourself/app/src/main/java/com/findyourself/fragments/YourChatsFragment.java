@@ -8,15 +8,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.findyourself.R;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.findyourself.R;
+import com.google.android.material.textview.MaterialTextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class YourChatsFragment extends Fragment {
@@ -24,6 +26,9 @@ public class YourChatsFragment extends Fragment {
     RecyclerView dataList;
     List<String> titles;
     RecyclerView.Adapter adapter;
+    MaterialTextView hi_user;
+
+    String username;
 
     public YourChatsFragment() {
 
@@ -36,16 +41,19 @@ public class YourChatsFragment extends Fragment {
 
         }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_your_chat_rooms, container, false);
         dataList = view.findViewById(R.id.your_chat_rv);
+
+
+        hi_user = view.findViewById(R.id.welcome_note);
+//        hi_user.setText("Hi "+ getArguments().getString("username")+"...");
+//        Log.i("received args",getArguments().getString("username"));
+
         titles = new ArrayList<>();
-
-
         titles.add("First Item");
         titles.add("Second Item");
         titles.add("Third Item");
@@ -53,9 +61,7 @@ public class YourChatsFragment extends Fragment {
         titles.add("Fifth Item");
         titles.add("Sixth Item");
 
-
         adapter = new YourChatsFragment.Adapter(getContext(), titles);
-
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         dataList.setLayoutManager(linearLayoutManager);
@@ -64,6 +70,10 @@ public class YourChatsFragment extends Fragment {
 
         return view;
 
+    }
+
+    public void putArgs(Bundle b) {
+        username = b.getString("username");
     }
 
     public class Adapter extends RecyclerView.Adapter<YourChatsFragment.Adapter.ViewHolder> {
@@ -85,6 +95,12 @@ public class YourChatsFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull YourChatsFragment.Adapter.ViewHolder holder, int position) {
             holder.title.setText(titles.get(position));
+            if (position % 2 == 1) {
+                holder.itemView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
+            } else {
+                holder.itemView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+
+            }
         }
 
         @Override

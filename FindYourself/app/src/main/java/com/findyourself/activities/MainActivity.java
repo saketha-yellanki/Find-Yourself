@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
         loadData();
 
+
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new YourChatsFragment()).commit();
 
@@ -88,6 +89,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void sendDetailsToFragments() {
+
+        Bundle bundle = new Bundle();
+        bundle.putString("username", user.getUsername());
+        bundle.putString("fullname", user.getFullname());
+        bundle.putString("dob", user.getBirthday());
+        bundle.putString("gender", user.getGender());
+
+        Log.i("User details", bundle.getString("username"));
+
+        YourChatsFragment frag1 = new YourChatsFragment();
+        frag1.setArguments(bundle);
+
+        ProfileFragment frag2 = new ProfileFragment();
+        frag2.setArguments(bundle);
+    }
+
     private void findViews() {
         bottomNav = findViewById(R.id.bottom_navigation);
     }
@@ -103,6 +121,8 @@ public class MainActivity extends AppCompatActivity {
                 user.setFullname(Objects.requireNonNull(snapshot.child("fullname").getValue()).toString());
                 user.setGender(Objects.requireNonNull(snapshot.child("gender").getValue()).toString());
                 user.setBirthday(Objects.requireNonNull(snapshot.child("birthday").getValue()).toString());
+
+                sendDetailsToFragments();
 
                 //textView.setText(user.getUsername());
             }
