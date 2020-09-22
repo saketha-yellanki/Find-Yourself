@@ -14,11 +14,20 @@
         android:layout_weight="0.4"
         android:orientation="vertical">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="298dp"
             android:background="@drawable/gradient_1"
             android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/menu_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_margin="26dp"
+                android:background="@drawable/more_vert" />
 
 
             <ImageView
@@ -26,7 +35,6 @@
                 android:layout_width="189dp"
                 android:layout_height="214dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="50dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/fy_logo_white" />
 

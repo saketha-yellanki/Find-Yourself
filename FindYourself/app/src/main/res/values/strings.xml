@@ -37,4 +37,6 @@
     <string name="new_user">New User? SIGN UP</string>
     <string name="login">Login</string>
     <string name="welcome_user">"Hi "</string>
+    <string name="about">About</string>
+    <string name="tips">Tips</string>
 </resources>
