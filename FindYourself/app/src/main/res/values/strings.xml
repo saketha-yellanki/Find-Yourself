@@ -32,4 +32,8 @@
     <string name="gender_et">Gender</string>
     <string name="your_chats">Your Chat Rooms</string>
     <string name="logout">Logout</string>
+    <string name="welcome_back">WELCOME BACK</string>
+    <string name="log_tag">Login to continue your journey…</string>
+    <string name="new_user">New User? SIGN UP</string>
+    <string name="login">Login</string>
 </resources>

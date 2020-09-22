@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.AuthResult;
@@ -30,7 +31,7 @@ import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
-    MaterialButton login_btn;
+    ExtendedFloatingActionButton login_btn;
     TextInputEditText email;
     TextInputEditText password;
     MaterialTextView new_user;
@@ -153,7 +154,7 @@ public class LoginActivity extends AppCompatActivity {
                         finish();
                     } else {
                         Toast.makeText(LoginActivity.this, "Sign-in Failed", Toast.LENGTH_LONG).show();
-                        Log.i("Authentication Failed", task.getException().toString());
+                        Log.i("Authentication Failed", Objects.requireNonNull(task.getException()).toString());
                     }
                 }
             });
