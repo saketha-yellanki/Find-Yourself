@@ -27,7 +27,7 @@
                 android:fontFamily="@font/marko_one"
                 android:text="First"
                 android:textColor="@android:color/white"
-                android:textSize="25sp" />
+                android:textSize="27sp" />
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
 </LinearLayout>
