@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.findyourself.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
@@ -36,7 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
     TextInputLayout username, fullname, password, conf_password, dob, email;
     TextInputEditText un_et, fn_et, pass_et, conf_pass_et, dob_et, email_et;
     RadioGroup gender_grp;
-    MaterialButton register_btn;
+    ExtendedFloatingActionButton register_btn;
     int dob_year, dob_month, dob_day;
     MaterialTextView already_user_txt;
 
