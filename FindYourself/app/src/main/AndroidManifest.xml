@@ -4,13 +4,15 @@
 
     <application
         android:allowBackup="true"
+        android:fitsSystemWindows="true"
         android:icon="@drawable/fy_logo"
         android:label="@string/app_name"
         android:roundIcon="@drawable/fy_logo"
         android:supportsRtl="true"
-        android:fitsSystemWindows="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.ChatRoomActivity"></activity>
+        <activity android:name=".activities.TipsActivity"></activity>
+        <activity android:name=".activities.AboutActivity" />
+        <activity android:name=".activities.ChatRoomActivity" />
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.RegisterActivity" />
         <activity android:name=".activities.LoginActivity" />
