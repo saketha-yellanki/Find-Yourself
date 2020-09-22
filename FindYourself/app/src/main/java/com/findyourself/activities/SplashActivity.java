@@ -36,11 +36,11 @@ public class SplashActivity extends AppCompatActivity {
         //Hooks
         image = findViewById(R.id.imageView);
         logo = findViewById(R.id.textView);
-        slogan = findViewById(R.id.textView2);
+
 
         image.setAnimation(topAnim);
         logo.setAnimation(bottomAnim);
-        slogan.setAnimation(bottomAnim);
+        //slogan.setAnimation(bottomAnim);
 
         new Handler().postDelayed(new Runnable() {
             @Override
