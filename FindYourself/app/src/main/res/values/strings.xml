@@ -37,4 +37,18 @@
     <string name="new_user">New User? SIGN UP</string>
     <string name="login">Login</string>
     <string name="welcome_user">"Hi "</string>
+    <string name="about">About Us</string>
+    <string name="about_us">Find Yourself application\'s main motto is to help the people suffering from depression or mental health problems. Our users can join various chat groups to discuss their problems to their anonymous friends and can receive suggestions for their better life. Any personal inforamtion of the users are not taken and not disclosed to other users for the safety purposes  </string>
+    <string name="tip">Tips</string>
+    <string name="tips_info1"> 1.Value yourself</string>
+    <string name="tips_info2"> 2.Take care of your body</string>
+    <string name="tips_info3"> 3.Surround yourself with peace</string>
+    <string name="tips_info4"> 4.Learn how to deal with stress </string>
+    <string name="tips_info5"> 5.Quiet your mind</string>
+    <string name="tips_info6"> 6. Set realistic goals</string>
+    <string name="tips_info7"> 7.Breakup the monotomy</string>
+    <string name="tips_info8"> 8.Avoid alcohol and other drugs</string>
+    <string name="tips_info9">9. Visit "Find Yourself" when you need it :)</string>
+
+
 </resources>
