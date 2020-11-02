@@ -10,7 +10,8 @@
         android:roundIcon="@drawable/fy_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.TipsActivity"></activity>
+        <activity android:name=".activities.GroupInfoActivity"></activity>
+        <activity android:name=".activities.TipsActivity" />
         <activity android:name=".activities.AboutActivity" />
         <activity android:name=".activities.ChatRoomActivity" />
         <activity android:name=".activities.MainActivity" />
