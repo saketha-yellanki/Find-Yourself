@@ -15,6 +15,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.findyourself.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +29,12 @@ public class AllChatsFragment extends Fragment {
 
     RecyclerView dataList;
     List<String> titles;
-    List<Integer> images;
+    //List<Integer> images;
+    List<String> room_ids;
     Adapter adapter;
+
+    FirebaseDatabase db = FirebaseDatabase.getInstance();
+    DatabaseReference room_ref = db.getReference("rooms");
 
     public AllChatsFragment() {
     }
@@ -50,30 +59,56 @@ public class AllChatsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_all_chat_rooms, container, false);
         dataList = view.findViewById(R.id.all_chat_rv);
         titles = new ArrayList<>();
-        images = new ArrayList<>();
+        //images = new ArrayList<>();
+        room_ids = new ArrayList<>();
 
-        titles.add("First Item");
-        titles.add("Second Item");
-        titles.add("Third Item");
-        titles.add("Fourth Item");
-        titles.add("Fifth Item");
-        titles.add("Sixth Item");
+        room_ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    String rid = ds.getKey();
+                    room_ids.add(rid);
+                    titles.add(ds.child("room_name").getValue().toString());
+                }
 
-
-        images.add(R.drawable.title1);
-        images.add(R.drawable.title2);
-        images.add(R.drawable.title3);
-        images.add(R.drawable.title4);
-        images.add(R.drawable.title5);
-        images.add(R.drawable.title6);
+                //images.add(R.drawable.gradient_1);
+                adapter = new Adapter(getContext(), titles);
 
 
-        adapter = new Adapter(getContext(), titles, images);
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
+                dataList.setLayoutManager(gridLayoutManager);
+                dataList.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
-        dataList.setLayoutManager(gridLayoutManager);
-        dataList.setAdapter(adapter);
+//        titles.add("First Item");
+//        titles.add("Second Item");
+//        titles.add("Third Item");
+//        titles.add("Fourth Item");
+//        titles.add("Fifth Item");
+//        titles.add("Sixth Item");
+
+
+//        images.add(R.drawable.title1);
+//        images.add(R.drawable.title2);
+//        images.add(R.drawable.title3);
+//        images.add(R.drawable.title4);
+//        images.add(R.drawable.title5);
+//        images.add(R.drawable.title6);
+
+
+//        adapter = new Adapter(getContext(), titles);
+//
+//
+//        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
+//        dataList.setLayoutManager(gridLayoutManager);
+//        dataList.setAdapter(adapter);
 
 
         return view;
@@ -83,12 +118,12 @@ public class AllChatsFragment extends Fragment {
     public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
         List<String> titles;
-        List<Integer> images;
+        //List<Integer> images;
         LayoutInflater inflater;
 
-        public Adapter(Context ctx, List<String> titles, List<Integer> images) {
+        public Adapter(Context ctx, List<String> titles) {
             this.titles = titles;
-            this.images = images;
+            //this.images = images;
             this.inflater = LayoutInflater.from(ctx);
         }
 
@@ -103,7 +138,7 @@ public class AllChatsFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.title.setText(titles.get(position));
-            holder.gridIcon.setImageResource(images.get(position));
+            //holder.gridIcon.setImageResource(images.get(position));
         }
 
         @Override
@@ -118,7 +153,7 @@ public class AllChatsFragment extends Fragment {
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 title = itemView.findViewById(R.id.textView2);
-                gridIcon = itemView.findViewById(R.id.imageView2);
+                //gridIcon = itemView.findViewById(R.id.imageView2);
 
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override

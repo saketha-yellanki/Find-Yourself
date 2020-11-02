@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_1"
+    android:background="@android:color/white"
     android:orientation="vertical"
     tools:context=".fragments.AllChatsFragment">
 
@@ -15,9 +15,9 @@
         android:layout_marginRight="16dp"
         android:gravity="center_horizontal"
         android:text="@string/all_chats"
-        android:textColor="@android:color/white"
+        android:fontFamily="@font/marko_one"
         android:textSize="36sp"
-        android:textStyle="bold" />
+        android:textColor="@color/dark_grey" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/all_chat_rv"
