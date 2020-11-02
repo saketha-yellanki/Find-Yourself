@@ -2,6 +2,7 @@ package com.findyourself.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.findyourself.R;
+import com.findyourself.activities.ThisUser;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,22 +33,24 @@ import java.util.List;
 public class YourChatsFragment extends Fragment {
 
     RecyclerView dataList;
-    List<String> titles;
+    List<String> titles, room_ids;
     RecyclerView.Adapter adapter;
     MaterialTextView hi_user;
 
     String username;
 
+    FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseDatabase db = FirebaseDatabase.getInstance();
+
+
     public YourChatsFragment() {
-
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,22 +61,57 @@ public class YourChatsFragment extends Fragment {
 
 
         hi_user = view.findViewById(R.id.welcome_note);
-//        hi_user.setText("Hi "+ getArguments().getString("username")+"...");
-//        Log.i("received args",getArguments().getString("username"));
+        hi_user.setText("Hi! " + ThisUser.instance.getUsername());
 
         titles = new ArrayList<>();
-        titles.add("First Item");
-        titles.add("Second Item");
-        titles.add("Third Item");
-        titles.add("Fourth Item");
-        titles.add("Fifth Item");
-        titles.add("Sixth Item");
+        room_ids = new ArrayList<>();
 
-        adapter = new YourChatsFragment.Adapter(getContext(), titles);
+        final DatabaseReference room_ref = db.getReference("rooms");
+        room_ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (final DataSnapshot ds : snapshot.getChildren()) {
+                    Log.i("ds", ds.getValue().toString());
+                    DatabaseReference m_ref = ds.child("members").getRef();
+                    m_ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot mds : snapshot.getChildren()) {
+                                Log.i("mds", mds.getKey().toString());
+                                if (mds.getKey().equals(current_user.getUid())) {
+                                    titles.add(ds.child("room_name").getValue().toString());
+                                    room_ids.add(ds.getKey());
+                                    Log.i("room name", ds.child("room_name").getValue().toString());
+                                }
+                            }
+                            adapter = new YourChatsFragment.Adapter(getContext(), titles);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        dataList.setLayoutManager(linearLayoutManager);
-        dataList.setAdapter(adapter);
+                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+                            dataList.setLayoutManager(linearLayoutManager);
+                            dataList.setAdapter(adapter);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+//        titles.add("First Item");
+//        titles.add("Second Item");
+//        titles.add("Third Item");
+//        titles.add("Fourth Item");
+//        titles.add("Fifth Item");
+//        titles.add("Sixth Item");
 
 
         return view;
