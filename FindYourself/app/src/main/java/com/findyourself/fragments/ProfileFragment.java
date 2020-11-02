@@ -26,8 +26,9 @@ import com.google.firebase.auth.FirebaseAuth;
 public class ProfileFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
 
 
-    MaterialButton logout;
+    MaterialButton logout, create_room;
     AppCompatImageButton menu_btn;
+
 
     String un, fn, dob, gen;
 
@@ -48,6 +49,13 @@ public class ProfileFragment extends Fragment implements PopupMenu.OnMenuItemCli
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
+
+        create_room.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
 
     }
@@ -75,6 +83,7 @@ public class ProfileFragment extends Fragment implements PopupMenu.OnMenuItemCli
                 getActivity().finish();
             }
         });
+        create_room = view.findViewById(R.id.create_room);
 
         menu_btn.setOnClickListener(new View.OnClickListener() {
             @Override

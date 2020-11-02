@@ -3,6 +3,8 @@ package com.findyourself.activities;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     AllChatsFragment allChatsFragment;
     ProfileFragment profileFragment;
     YourChatsFragment yourChatsFragment;
+
+    ProgressBar pb;
 
     BottomNavigationView bottomNav;
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -67,11 +71,10 @@ public class MainActivity extends AppCompatActivity {
         current_user = fAuth.getCurrentUser();
         user = ThisUser.getInstance();
 
+        pb = findViewById(R.id.progress_bar);
+        pb.setVisibility(View.VISIBLE);
+
         loadData();
-
-
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new YourChatsFragment()).commit();
 
 
         //Log.i("Firebase User Details",current_user.getUid());
@@ -105,6 +108,10 @@ public class MainActivity extends AppCompatActivity {
 
         ProfileFragment frag2 = new ProfileFragment();
         frag2.setArguments(bundle);
+
+        pb.setVisibility(View.GONE);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new YourChatsFragment()).commit();
     }
 
     private void findViews() {
