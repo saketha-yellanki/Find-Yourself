@@ -15,6 +15,18 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="24dp"
         android:background="@drawable/fy_logo_white" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="138dp"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="@font/marko_one"
+        android:text="@string/tip"
+        android:textColor="@android:color/white"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -134,14 +146,5 @@
 
     </LinearLayout>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:layout_marginStart="138dp"
-        android:fontFamily="@font/marko_one"
-        android:text="@string/tip"
-        android:textColor="@android:color/white"
-        android:textSize="40sp"
-        android:textStyle="bold" />
+
 </LinearLayout>

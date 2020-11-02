@@ -23,17 +23,6 @@
         android:layout_marginEnd="8dp"
         android:layout_marginTop="12dp"
         android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/marko_one"
-            android:text="@string/about_us"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
@@ -44,6 +33,18 @@
             android:text="@string/about"
             android:textColor="@android:color/white"
             android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/marko_one"
+            android:text="@string/about_us"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
 
