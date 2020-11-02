@@ -1,7 +1,9 @@
 package com.findyourself.fragments;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.findyourself.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,6 +42,9 @@ public class AllChatsFragment extends Fragment {
 
     FirebaseDatabase db = FirebaseDatabase.getInstance();
     DatabaseReference room_ref = db.getReference("rooms");
+    DatabaseReference user_ref = db.getReference("users");
+
+    FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
 
     public AllChatsFragment() {
     }
@@ -62,6 +72,8 @@ public class AllChatsFragment extends Fragment {
         //images = new ArrayList<>();
         room_ids = new ArrayList<>();
 
+        final String uid = current_user.getUid();
+
         room_ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -85,32 +97,6 @@ public class AllChatsFragment extends Fragment {
 
             }
         });
-
-
-//        titles.add("First Item");
-//        titles.add("Second Item");
-//        titles.add("Third Item");
-//        titles.add("Fourth Item");
-//        titles.add("Fifth Item");
-//        titles.add("Sixth Item");
-
-
-//        images.add(R.drawable.title1);
-//        images.add(R.drawable.title2);
-//        images.add(R.drawable.title3);
-//        images.add(R.drawable.title4);
-//        images.add(R.drawable.title5);
-//        images.add(R.drawable.title6);
-
-
-//        adapter = new Adapter(getContext(), titles);
-//
-//
-//        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
-//        dataList.setLayoutManager(gridLayoutManager);
-//        dataList.setAdapter(adapter);
-
-
         return view;
     }
 
@@ -155,10 +141,50 @@ public class AllChatsFragment extends Fragment {
                 title = itemView.findViewById(R.id.textView2);
                 //gridIcon = itemView.findViewById(R.id.imageView2);
 
-                itemView.setOnClickListener(new View.OnClickListener() {
+                itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
-                    public void onClick(View v) {
-                        Toast.makeText(v.getContext(), "Clicked -> " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+                    public boolean onLongClick(View view) {
+                        final String room_id = room_ids.get(getAdapterPosition());
+                        MaterialAlertDialogBuilder dialog = new MaterialAlertDialogBuilder(view.getContext());
+                        dialog.setTitle("Do you want to join this room?");
+                        dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                room_ref.child(room_id).child("members").child(current_user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if (snapshot.exists()) {
+                                            Toast.makeText(getContext(), "Already a member", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            room_ref.child(room_id).child("members").child(current_user.getUid()).setValue(true).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        Toast.makeText(getContext(), "Successfully Joined the Room", Toast.LENGTH_SHORT).show();
+                                                    } else {
+                                                        Toast.makeText(getContext(), "Error Joining the Room", Toast.LENGTH_SHORT).show();
+                                                        Log.i("Joining room failed", task.getException().toString());
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                            }
+                        });
+                        dialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        });
+                        Toast.makeText(view.getContext(), "Clicked -> " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+                        return false;
                     }
                 });
             }
