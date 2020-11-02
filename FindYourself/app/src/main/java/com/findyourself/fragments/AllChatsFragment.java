@@ -74,7 +74,7 @@ public class AllChatsFragment extends Fragment {
 
         final String uid = current_user.getUid();
 
-        room_ref.addValueEventListener(new ValueEventListener() {
+        room_ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
@@ -141,9 +141,9 @@ public class AllChatsFragment extends Fragment {
                 title = itemView.findViewById(R.id.textView2);
                 //gridIcon = itemView.findViewById(R.id.imageView2);
 
-                itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public boolean onLongClick(View view) {
+                    public void onClick(View view) {
                         final String room_id = room_ids.get(getAdapterPosition());
                         MaterialAlertDialogBuilder dialog = new MaterialAlertDialogBuilder(view.getContext());
                         dialog.setTitle("Do you want to join this room?");
@@ -160,6 +160,18 @@ public class AllChatsFragment extends Fragment {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
+                                                        room_ref.child(room_id).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                            @Override
+                                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                int mc = Integer.parseInt(snapshot.child("members_count").getValue().toString());
+                                                                room_ref.child(room_id).child("members_count").setValue(mc + 1);
+                                                            }
+
+                                                            @Override
+                                                            public void onCancelled(@NonNull DatabaseError error) {
+                                                            }
+                                                        });
+
                                                         Toast.makeText(getContext(), "Successfully Joined the Room", Toast.LENGTH_SHORT).show();
                                                     } else {
                                                         Toast.makeText(getContext(), "Error Joining the Room", Toast.LENGTH_SHORT).show();
@@ -183,8 +195,9 @@ public class AllChatsFragment extends Fragment {
                                 dialogInterface.dismiss();
                             }
                         });
-                        Toast.makeText(view.getContext(), "Clicked -> " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
-                        return false;
+                        dialog.create().show();
+                        //Toast.makeText(view.getContext(), "Clicked -> " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+
                     }
                 });
             }
