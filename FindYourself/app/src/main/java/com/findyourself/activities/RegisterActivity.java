@@ -139,7 +139,7 @@ public class RegisterActivity extends AppCompatActivity {
         String uid = user.getUid();
         DatabaseReference ref = db.getReference("users");
         Map newUser = new HashMap();
-        newUser.put(uid, new ThisUser(username, fullname, gender, dob));
+        newUser.put(uid, new ThisUser(username, fullname, gender, dob, 0));
         ref.child(uid).setValue(newUser.get(uid)).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

@@ -1,12 +1,18 @@
 package com.findyourself.fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
@@ -14,9 +20,22 @@ import androidx.fragment.app.Fragment;
 import com.findyourself.R;
 import com.findyourself.activities.AboutActivity;
 import com.findyourself.activities.LoginActivity;
+import com.findyourself.activities.ThisUser;
 import com.findyourself.activities.TipsActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,9 +47,18 @@ public class ProfileFragment extends Fragment implements PopupMenu.OnMenuItemCli
 
     MaterialButton logout, create_room;
     AppCompatImageButton menu_btn;
+    MaterialAlertDialogBuilder materialDialog;
+
+    FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
+    final String uid = fUser.getUid();
+    FirebaseDatabase db = FirebaseDatabase.getInstance();
+    final DatabaseReference ref = db.getReference("rooms");
+    final DatabaseReference user_ref = db.getReference("users");
 
 
     String un, fn, dob, gen;
+    ThisUser user = ThisUser.instance;
+
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -50,12 +78,7 @@ public class ProfileFragment extends Fragment implements PopupMenu.OnMenuItemCli
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
 
-        create_room.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
 
 
     }
@@ -68,10 +91,11 @@ public class ProfileFragment extends Fragment implements PopupMenu.OnMenuItemCli
     }
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         menu_btn = view.findViewById(R.id.menu_btn);
         logout = view.findViewById(R.id.logout_btn);
@@ -85,6 +109,80 @@ public class ProfileFragment extends Fragment implements PopupMenu.OnMenuItemCli
         });
         create_room = view.findViewById(R.id.create_room);
 
+        create_room.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(final View view) {
+
+                user_ref.child(uid).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        final int present_room_count = Integer.parseInt(snapshot.child("created_rooms").getValue().toString());
+                        if (present_room_count > 3) {
+                            Toast.makeText(getContext(), "Reached Maximum Limit : 3", Toast.LENGTH_LONG).show();
+                        } else {
+
+                            final EditText grp_name = new EditText(view.getContext());
+                            final AlertDialog.Builder create_grp_dialog = new AlertDialog.Builder(view.getContext());
+                            create_grp_dialog.setTitle("Create New Room");
+                            create_grp_dialog.setMessage("Enter Room Name");
+                            create_grp_dialog.setView(grp_name);
+                            create_grp_dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(final DialogInterface dialogInterface, int i) {
+
+                                    String room_name = grp_name.getText().toString();
+
+                                    final HashMap mem = new HashMap();
+                                    mem.put(uid, true);
+                                    HashMap map = new HashMap();
+                                    map.put("room_name", room_name);
+                                    map.put("creator", uid);
+                                    map.put("members_count", 1);
+                                    //map.put("members",mem.get(0));
+
+                                    final String room_id = ref.push().getKey();
+                                    ref.child(room_id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                ref.child(room_id).child("members").setValue(mem);
+                                                user_ref.child(uid).child("created_rooms").setValue(present_room_count + 1);
+                                                Toast.makeText(getContext(), "Room Successfully Created", Toast.LENGTH_LONG).show();
+                                                dialogInterface.dismiss();
+                                            } else {
+                                                Log.i("cannot create room", task.getException().toString());
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+
+                            create_grp_dialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+
+                                }
+                            });
+                            create_grp_dialog.create().show();
+
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+            }
+
+
+        });
+
         menu_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,7 +192,14 @@ public class ProfileFragment extends Fragment implements PopupMenu.OnMenuItemCli
 
         return view;
 
+
     }
+
+    private void create_new_room(View view, final int present_room_count) {
+
+
+    }
+
 
     public void putArgs(Bundle bundle) {
         un = bundle.getString("username");

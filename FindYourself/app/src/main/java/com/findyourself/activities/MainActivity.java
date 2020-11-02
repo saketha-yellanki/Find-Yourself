@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         bundle.putString("fullname", user.getFullname());
         bundle.putString("dob", user.getBirthday());
         bundle.putString("gender", user.getGender());
+        bundle.putInt("created_rooms", user.getCreated_rooms());
 
         Log.i("User details", bundle.getString("username"));
 
@@ -129,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 user.setFullname(Objects.requireNonNull(snapshot.child("fullname").getValue()).toString());
                 user.setGender(Objects.requireNonNull(snapshot.child("gender").getValue()).toString());
                 user.setBirthday(Objects.requireNonNull(snapshot.child("birthday").getValue()).toString());
+                user.setCreated_rooms(Integer.parseInt(snapshot.child("created_rooms").getValue().toString()));
 
                 sendDetailsToFragments();
 

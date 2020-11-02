@@ -6,15 +6,18 @@ public class ThisUser {
     public String fullname;
     public String gender;
     public String birthday;
+    public int created_rooms;
 
     private ThisUser() {
     }
 
-    public ThisUser(String username, String fullname, String gender, String birthday) {
+
+    public ThisUser(String username, String fullname, String gender, String birthday, int created_rooms) {
         this.username = username;
         this.fullname = fullname;
         this.gender = gender;
         this.birthday = birthday;
+        this.created_rooms = created_rooms;
     }
 
     static ThisUser getInstance() {
@@ -22,6 +25,14 @@ public class ThisUser {
             instance = new ThisUser();
         }
         return instance;
+    }
+
+    public int getCreated_rooms() {
+        return created_rooms;
+    }
+
+    public void setCreated_rooms(int created_rooms) {
+        this.created_rooms = created_rooms;
     }
 
     public String getUsername() {
