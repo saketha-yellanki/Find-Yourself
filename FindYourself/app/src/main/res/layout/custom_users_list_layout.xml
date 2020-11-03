@@ -11,15 +11,14 @@
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/chatroom_user_name_rv"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
             android:background="@drawable/gradient"
             android:fontFamily="@font/marko_one"
             android:padding="16dp"
             android:text="Name"
             android:textColor="@android:color/white"
-            android:textSize="24sp" />
+            android:textSize="20sp" />
 
 
 </com.google.android.material.card.MaterialCardView>

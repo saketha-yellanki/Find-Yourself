@@ -2,12 +2,16 @@ package com.findyourself.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -16,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.utils.widget.ImageFilterButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -49,7 +54,9 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
     RecyclerView rvMessage;
     TextInputEditText etMessage;
     AppCompatImageButton imgButton;
-    String room_id;
+    String room_id, room_name;
+    Toolbar toolbar;
+    String room_title;
 
     ChildEventListener childEventListener;
 
@@ -60,6 +67,12 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
 
         Log.i("current method", "onCreate()");
         room_id = getIntent().getStringExtra("room_id");
+        room_name = getIntent().getStringExtra("room_title");
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(room_name);
+        setSupportActionBar(toolbar);
+
+
         init();
     }
 
@@ -82,6 +95,32 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
 
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.chat_menu_items, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_info:
+                Intent intent = new Intent(this, GroupInfoActivity.class);
+                intent.putExtra("room_id", room_id);
+                intent.putExtra("room_name", room_name);
+                startActivity(intent);
+                break;
+            case R.id.action_leave:
+                //delete user from the group
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
     }
 
     @Override

@@ -86,7 +86,7 @@ public class YourChatsFragment extends Fragment {
                                     Log.i("room name", ds.child("room_name").getValue().toString());
                                 }
                             }
-                            adapter = new YourChatsFragment.Adapter(getContext(), titles);
+                            adapter = new YourChatsFragment.Adapter(getActivity(), titles);
 
                             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
                             dataList.setLayoutManager(linearLayoutManager);
@@ -168,6 +168,7 @@ public class YourChatsFragment extends Fragment {
                     public void onClick(View v) {
                         Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
                         intent.putExtra("room_id", room_ids.get(getAdapterPosition()));
+                        intent.putExtra("room_title", titles.get(getAdapterPosition()));
                         startActivity(intent);
                         Toast.makeText(v.getContext(), "Clicked -> " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
                     }
