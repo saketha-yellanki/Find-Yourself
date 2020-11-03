@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -115,12 +116,29 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(intent);
                 break;
             case R.id.action_leave:
-                //delete user from the group
+                deleteUser();
                 break;
             default:
                 return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+
+    private void deleteUser() {
+        String uid = current_user.getUid();
+        DatabaseReference room_ref = db.getReference("rooms");
+        room_ref.child(room_id).child("members").child(uid).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(ChatRoomActivity.this, "Left the room successfully", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(ChatRoomActivity.this, MainActivity.class));
+                    finish();
+                } else {
+                    Log.i("error leaving room", task.getException().toString());
+                }
+            }
+        });
     }
 
     @Override
