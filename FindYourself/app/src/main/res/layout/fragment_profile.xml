@@ -62,6 +62,8 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/fullname"
+                android:fontFamily="@font/marko_one"
+                android:textColor="#0191B4"
                 android:textSize="25sp" />
 
         </LinearLayout>
@@ -79,11 +81,14 @@
                 android:src="@drawable/ic_usprofile" />
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/username_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/username"
+                android:fontFamily="@font/marko_one"
+                android:textColor="#0191B4"
                 android:textSize="25sp" />
         </LinearLayout>
 
@@ -101,11 +106,14 @@
                 android:src="@drawable/ic_dob" />
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/date_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
+                android:fontFamily="@font/marko_one"
                 android:text="@string/dob_et"
+                android:textColor="#0191B4"
                 android:textSize="25sp" />
         </LinearLayout>
 
@@ -122,10 +130,13 @@
                 android:src="@drawable/ic_gender" />
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/gender_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
+                android:fontFamily="@font/marko_one"
+                android:textColor="#0191B4"
                 android:text="@string/gender_et"
                 android:textSize="25sp" />
         </LinearLayout>
@@ -141,7 +152,8 @@
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            app:backgroundTint="@android:color/holo_purple" />
+            android:fontFamily="@font/marko_one"
+            app:backgroundTint="@android:color/holo_green_dark" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/logout_btn"
@@ -154,7 +166,7 @@
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            app:backgroundTint="@android:color/holo_blue_dark">
+            app:backgroundTint="@android:color/holo_green_light">
 
         </com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton>
 

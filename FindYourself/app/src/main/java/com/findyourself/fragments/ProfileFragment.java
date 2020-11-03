@@ -56,7 +56,7 @@ public class ProfileFragment extends Fragment implements PopupMenu.OnMenuItemCli
     final DatabaseReference ref = db.getReference("rooms");
     final DatabaseReference user_ref = db.getReference("users");
 
-    MaterialTextView fullname;
+    MaterialTextView fullname, username, dateofbirth, gender;
     String un, fn, dob, gen;
     ThisUser user = ThisUser.instance;
 
@@ -100,6 +100,12 @@ public class ProfileFragment extends Fragment implements PopupMenu.OnMenuItemCli
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         fullname = view.findViewById(R.id.fullname_profile);
         fullname.setText(user.getFullname());
+        username = view.findViewById(R.id.username_profile);
+        username.setText(user.getUsername());
+        dateofbirth = view.findViewById(R.id.date_profile);
+        dateofbirth.setText(user.getBirthday());
+        gender = view.findViewById(R.id.gender_profile);
+        gender.setText(user.getGender());
         menu_btn = view.findViewById(R.id.menu_btn);
         logout = view.findViewById(R.id.logout_btn);
         logout.setOnClickListener(new View.OnClickListener() {
