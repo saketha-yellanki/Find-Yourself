@@ -11,12 +11,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.appcompat.widget.PopupMenu;
-import androidx.fragment.app.Fragment;
-
 import com.findyourself.R;
 import com.findyourself.activities.AboutActivity;
 import com.findyourself.activities.LoginActivity;
@@ -26,6 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +30,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.fragment.app.Fragment;
 
 
 /**
@@ -55,7 +56,7 @@ public class ProfileFragment extends Fragment implements PopupMenu.OnMenuItemCli
     final DatabaseReference ref = db.getReference("rooms");
     final DatabaseReference user_ref = db.getReference("users");
 
-
+    MaterialTextView fullname;
     String un, fn, dob, gen;
     ThisUser user = ThisUser.instance;
 
@@ -97,6 +98,8 @@ public class ProfileFragment extends Fragment implements PopupMenu.OnMenuItemCli
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        fullname = view.findViewById(R.id.fullname_profile);
+        fullname.setText(user.getFullname());
         menu_btn = view.findViewById(R.id.menu_btn);
         logout = view.findViewById(R.id.logout_btn);
         logout.setOnClickListener(new View.OnClickListener() {

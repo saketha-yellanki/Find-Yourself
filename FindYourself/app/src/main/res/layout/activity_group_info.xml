@@ -6,13 +6,7 @@
     android:orientation="vertical"
     tools:context=".activities.GroupInfoActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/users_rv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="36dp" />
+
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/group_info_welcome"
@@ -27,5 +21,13 @@
         android:textColor="@android:color/white"
         android:textSize="30sp"
         android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/users_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginRight="8dp" />
 
 </LinearLayout>
