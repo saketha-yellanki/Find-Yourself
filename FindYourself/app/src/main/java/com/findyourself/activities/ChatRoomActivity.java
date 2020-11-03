@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.findyourself.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,12 +49,17 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
     RecyclerView rvMessage;
     TextInputEditText etMessage;
     AppCompatImageButton imgButton;
+    String room_id;
+
+    ChildEventListener childEventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
 
+        Log.i("current method", "onCreate()");
+        room_id = getIntent().getStringExtra("room_id");
         init();
     }
 
@@ -67,31 +75,44 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
 
         if (!TextUtils.isEmpty(etMessage.getText().toString())) {
-            String msg_id = messagedb.push().getKey();
+            String msg_id = messagedb.child(room_id).push().getKey();
             Message message = new Message(etMessage.getText().toString(), user.getUsername(), msg_id);
             etMessage.setText("");
-            messagedb.child(msg_id).setValue(message);
+            messagedb.child(room_id).child(msg_id).setValue(message);
 
         }
 
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        messagedb.child(room_id).removeEventListener(childEventListener);
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
 
+        Log.i("current method", "onStart()");
+        messages.clear();
         messagedb = db.getReference("messages");
-        messagedb.addChildEventListener(new ChildEventListener() {
+        childEventListener = messagedb.child(room_id).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Log.i("current method", "onChildAdded()");
                 Message message = snapshot.getValue(Message.class);
                 message.setKey(snapshot.getKey());
                 messages.add(message);
+                for (int i = 0; i < messages.size(); i++) {
+                    Log.i("all messages above", messages.get(i).toString());
+                }
                 displayMessages(messages);
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Log.i("current method", "onChildChanged()");
                 Message message = snapshot.getValue(Message.class);
                 message.setKey(snapshot.getKey());
                 List<Message> newMessages = new ArrayList<Message>();
@@ -104,11 +125,16 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
                     }
                 }
                 messages = newMessages;
+                for (int i = 0; i < messages.size(); i++) {
+                    Log.i("all messages", messages.get(i).toString());
+                }
+
                 displayMessages(messages);
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                Log.i("current method", "onChildRemoved()");
                 Message message = snapshot.getValue(Message.class);
                 message.setKey(snapshot.getKey());
                 List<Message> newmessages = new ArrayList<Message>();
@@ -138,10 +164,14 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onResume() {
         super.onResume();
+
+        Log.i("current method", "onResume()");
         messages = new ArrayList<>();
+        messages.clear();
     }
 
     private void displayMessages(List<Message> messages) {
+        Log.i("current method", "DisplayMessages()");
         rvMessage.setLayoutManager(new LinearLayoutManager(ChatRoomActivity.this));
         messageAdapter = new MessageAdapter(ChatRoomActivity.this, messages, messagedb);
         rvMessage.setAdapter(messageAdapter);
@@ -174,7 +204,7 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
             if (message.getName().equals(user.getUsername())) {
                 holder.tvTitle.setText("You: " + message.getMessage());
                 holder.tvTitle.setGravity(Gravity.START);
-                holder.l1.setBackgroundColor(Color.parseColor("#4adede"));
+                holder.l1.setBackgroundColor(Color.parseColor("#1ca7ec"));
                 holder.msg_parent_layout.setGravity(Gravity.END);
 
 
@@ -210,7 +240,18 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
                 ibDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        messagedb.child(messages.get(getAdapterPosition()).getKey()).removeValue();
+                        Log.i("clivked", "delete clicked");
+                        Log.i("delete msg id", messages.get(getAdapterPosition()).getKey());
+                        messagedb.child(room_id).child(messages.get(getAdapterPosition()).getKey()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.i("delete message", "successful");
+                                } else {
+                                    Log.i("delete unsuccessful", task.getException().toString());
+                                }
+                            }
+                        });
 
                     }
                 });

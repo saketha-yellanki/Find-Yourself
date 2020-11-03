@@ -166,7 +166,9 @@ public class YourChatsFragment extends Fragment {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(getActivity(), ChatRoomActivity.class));
+                        Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
+                        intent.putExtra("room_id", room_ids.get(getAdapterPosition()));
+                        startActivity(intent);
                         Toast.makeText(v.getContext(), "Clicked -> " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
                     }
                 });
