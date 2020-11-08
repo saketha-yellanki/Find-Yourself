@@ -127,19 +127,16 @@ public class YourChatsFragment extends Fragment {
     public class Adapter extends RecyclerView.Adapter<YourChatsFragment.Adapter.ViewHolder> {
         List<String> titles;
         LayoutInflater inflater;
-
         public Adapter(Context ctx, List<String> titles) {
             this.titles = titles;
             this.inflater = LayoutInflater.from(ctx);
         }
-
         @NonNull
         @Override
         public YourChatsFragment.Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = inflater.inflate(R.layout.custom_list_layout, parent, false);
             return new YourChatsFragment.Adapter.ViewHolder(view);
         }
-
         @Override
         public void onBindViewHolder(@NonNull YourChatsFragment.Adapter.ViewHolder holder, int position) {
             holder.title.setText(titles.get(position));

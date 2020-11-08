@@ -230,9 +230,9 @@ public class ProfileFragment extends Fragment implements PopupMenu.OnMenuItemCli
             case R.id.item_tips:
                 startActivity(new Intent(getActivity(), TipsActivity.class));
                 break;
-            case R.id.item_delete:
-                //deleteUser();
-                break;
+//            case R.id.item_delete:
+//                //deleteUser();
+//                break;
         }
         return true;
     }
